@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.incita</groupId>
+  <artifactId>incita-cas</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>incita-cas</name>
+  
+  <build>
+        <plugins>
+            <plugin>
+                 <artifactId>maven-war-plugin</artifactId>
+                             <configuration>
+                                 <warName>cas</warName>
+                             </configuration>
+                        </plugin>
+        </plugins>
+    </build>
+ 
+    <dependencies>
+    	<!-- Aplicacion web base -->
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp</artifactId>
+            <version>${cas.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!-- método de autentificacion: generico -->
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-generic</artifactId>
+            <version>${cas.version}</version>
+            <type>jar</type>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+ 
+    <properties>
+        <cas.version>3.5.0</cas.version>
+    </properties>
+ 
+        <repositories>
+             <repository>
+                  <id>ja-sig</id>
+                  <url>http://oss.sonatype.org/content/repositories/releases/ </url>
+             </repository>
+        </repositories>
+        
+</project>

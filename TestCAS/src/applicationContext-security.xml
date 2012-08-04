@@ -32,7 +32,7 @@
   
   <!--  punto de entrada -->
   <bean id="casEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
-    <property name="loginUrl" value="https://localhost:8181/cas-server-uber-webapp-3.5.0/login"/>
+    <property name="loginUrl" value="https://localhost:8181/cas/login"/>
     <property name="serviceProperties" ref="serviceProperties"/>
   </bean>
 
@@ -54,7 +54,7 @@
     	<property name="serviceProperties" ref="serviceProperties" />
     	<property name="ticketValidator">
       		<bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
-        		<constructor-arg index="0" value="https://localhost:8181/cas-server-uber-webapp-3.5.0" />
+        		<constructor-arg index="0" value="https://localhost:8181/cas" />
       		</bean>
     	</property>
     	<property name="key" value="TestCAS-KEY"/>
