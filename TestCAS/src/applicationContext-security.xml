@@ -20,8 +20,8 @@
 
 
 	<!-- configuracion de seguridad para HTTP -->
-    <sec:http entry-point-ref="casEntryPoint">
-        <sec:intercept-url pattern="/**" access="ROLE_ADMIN" />  
+    <sec:http entry-point-ref="casEntryPoint" use-expressions="true">
+        <sec:intercept-url pattern="/**" access="isAuthenticated()" />  
         <sec:logout logout-url="/logout.html" logout-success-url="/loggedOut.html" />
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
     </sec:http>
@@ -60,9 +60,11 @@
     	<property name="key" value="TestCAS-KEY"/>
   	</bean>
     
-    <sec:user-service id="userService">
-    	<sec:user name="peich" authorities="ROLE_ADMIN"/>
-    </sec:user-service>
+   <bean id="datasourceCAS" class="org.springframework.jndi.JndiObjectFactoryBean">
+   		<property name="jndiName" value="jdbc/CASDatasource" />
+	</bean>
+
+    <sec:jdbc-user-service id="userService" data-source-ref="datasourceCAS" />
     <!-- 
     <sec:jdbc-user-service data-source-ref=""/>
     -->
