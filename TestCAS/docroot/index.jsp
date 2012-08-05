@@ -13,10 +13,13 @@
     <h1>Hello World!</h1>
     <ul>
     	<li><b>USER:</b> <%=request.getUserPrincipal().getName() %></li>
+    	<li><b>ROLE:</b> <%=((CasAuthenticationToken)request.getUserPrincipal()).getAuthorities()%> 
     	<li><b>clase:</b> <%=((CasAuthenticationToken)request.getUserPrincipal())%></li>
     </ul>
     <hr />
     Aplicación destino:
-    <a href="/TestCAS">CAS 1</a>&nbsp;/&nbsp;<a href="/TestCAS2">CAS 2</a>
+    <a href="/TestCAS">CAS 1</a>&nbsp;/&nbsp;<a href="/TestCAS2">CAS 2</a>&nbsp;/&nbsp;<a href="/backbone">iBAP</a>
+    <br />
+    <a href="./j_spring_security_logout">LOGOUT</a>
   </body>
 </html> 

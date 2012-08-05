@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+	<id>pluto</id>
+	<build>
+		<finalName>${pluto.profile.finalName}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.portals.pluto</groupId>
+				<artifactId>maven-pluto-plugin</artifactId>
+				<version>${maven-pluto-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<webXml>src/main/resources/pluto/web.xml</webXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<configuration>
+					<webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+					<webAppConfig>
+		<!-- This default descriptor is given by the 'maven-jetty-pluto-embedded' plugin
+		 as a resource available in the classpath-->
+						<defaultsDescriptor>/WEB-INF/jetty-pluto-web-default.xml</defaultsDescriptor>
+					</webAppConfig>
+					<systemProperties>
+	    <!-- The portlet ids can be a comma separated list if you want to run more than one portlet in the portal-->
+						<systemProperty>
+							<name>org.apache.pluto.embedded.portletIds</name>
+							<value>AdminConsole, PfLauncher, TestPortlet, ZK286Portlet</value>
+						</systemProperty>
+					</systemProperties>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+				    <!--Although this is the pluto profile the generated war should not contain anything about pluto
+				     and his web.xml is the normal web.xml (WEB_INF/web.xml)-->
+					<packagingExcludes>WEB-INF/lib/*pluto*.jar, WEB-INF/lib/portlet-api-2.0.jar</packagingExcludes>
+				    <!--packagingExcludes>WEB-INF/lib/*pluto*.jar,WEB-INF/lib/portlet-api-2.0.jar,WEB-INF/lib/zk-${zk.version}.jar</packagingExcludes>
+				    <webResources>
+					<resource>
+					    <directory>src/main/resources/portlet286</directory>
+					    <targetPath>WEB-INF/lib</targetPath>
+					    <includes>
+						<include>zk.jar</include>
+					    </includes>
+					</resource>
+				    </webResources-->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>es.dunait</groupId>
+			<artifactId>maven-jetty-pluto-embedded</artifactId>
+			<version>${maven-jetty-pluto-embedded.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-portal-driver</artifactId>
+			<version>${pluto.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-portal-driver-impl</artifactId>
+			<version>${pluto.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-container-api</artifactId>
+			<version>${pluto.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-container-driver-api</artifactId>
+			<version>${pluto.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-container</artifactId>
+			<version>${pluto.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-taglib</artifactId>
+			<version>${pluto.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</profile>

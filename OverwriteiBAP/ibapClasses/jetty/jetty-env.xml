@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+
+  
+	<New id="H2DEVDSNative" class="org.eclipse.jetty.plus.jndi.Resource">		
+		<Arg>jdbc/ibap/h2/DSNative</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="Url">jdbc:h2:tcp://localhost:9099/persistence</Set>
+				<Set name="Username">sa</Set>
+				<Set name="Password">sa</Set>
+				<Set name="removeAbandoned">true</Set>
+				<Set name="removeAbandonedTimeout">10</Set>
+			</New>
+		</Arg>
+	</New>
+
+
+    <!-- Only for testing DEV mode -->
+    <!--
+	<New id="OracleDEVDSNative" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>java:comp/env/jdbc/oracle/dev/DSNative</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">oracle.jdbc.driver.OracleDriver</Set>
+				<Set name="Url">jdbc:oracle:thin:@localhost:1521:xe</Set>
+				<Set name="Username">persistence_test</Set>
+				<Set name="Password">persistence_test</Set>-
+			</New>
+		</Arg>
+	</New>    
+
+	<New id="OracleDEVDSNativeActiviti" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>java:comp/env/jdbc/oracle/dev/DSNativeActiviti</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+            <Set name="driverClassName">oracle.jdbc.driver.OracleDriver</Set>
+            <Set name="Url">jdbc:oracle:thin:@wl1.ptbsl.com:1521:orcl</Set>
+            <Set name="Username">activiti_test</Set>
+            <Set name="Password">activiti_test</Set>
+			</New>
+		</Arg>
+	</New>
+
+	<New id="H2DEVDSNativeProject" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>jdbc/ibap/h2/DSNativeProject</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+			    --><!--To testing DEV mode, is necessary to start H2 separately -->
+                <!--solo se puede probar con un proyecto, cambiar la Url o crear otro DS para otro proyecto... --><!--
+                <Set name="Url">jdbc:h2:tcp://localhost:9092/~\.brt\backbone\bpmnActiviti\db\persistence</Set>
+                <Set name="driverClassName">org.h2.Driver</Set>
+                <Set name="Username">sa</Set>
+			</New>
+		</Arg>
+	</New>
+	-->
+</Configure>

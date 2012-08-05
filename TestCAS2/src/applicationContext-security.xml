@@ -22,7 +22,9 @@
 	<!-- configuracion de seguridad para HTTP -->
     <sec:http entry-point-ref="casEntryPoint" use-expressions="true">
         <sec:intercept-url pattern="/**" access="isAuthenticated()" />  
-        <sec:logout logout-url="/logout.html" logout-success-url="/loggedOut.html" />
+    <sec:logout logout-success-url="/j_spring_cas_security_logout"/>
+    <sec:custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER"/>
+    <sec:custom-filter ref="singleLogoutFilter" before="CAS_FILTER"/>
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
     </sec:http>
     
@@ -54,7 +56,7 @@
     	<property name="serviceProperties" ref="serviceProperties" />
     	<property name="ticketValidator">
       		<bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
-        		<constructor-arg index="0" value="https://localhost:8181/cas" />
+        		<constructor-arg index="0" value="http://localhost:8080/cas" />
       		</bean>
     	</property>
     	<property name="key" value="TestCAS-KEY"/>
@@ -68,4 +70,18 @@
     <!-- 
     <sec:jdbc-user-service data-source-ref=""/>
     -->
+    
+    <!-- This filter handles a Single Logout Request from the CAS Server -->
+  <bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/>
+  
+  <!-- This filter redirects to the CAS Server to signal Single Logout should be performed -->
+  <bean id="requestSingleLogoutFilter"
+        class="org.springframework.security.web.authentication.logout.LogoutFilter">
+    <constructor-arg value="https://localhost:8181/cas/logout"/>
+    <constructor-arg>
+      <bean class=
+          "org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+    </constructor-arg>
+    <property name="filterProcessesUrl" value="/j_spring_cas_security_logout"/>
+  </bean>
 </beans>
